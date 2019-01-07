@@ -20,3 +20,15 @@ def user_detail(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     serializer = UserSerializer(user)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', ])
+@permission_classes((permissions.AllowAny,))
+def user_list(request):
+    """
+    get:
+        returns user list
+    """
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return  Response(serializer.data, status=status.HTTP_200_OK)
