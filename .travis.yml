@@ -3,10 +3,13 @@ python:
   - "3.6"
 install:
   - "pip install pipenv"
-  - "pipenv install"
+  - "pip install coveralls"
+  - "pip install flake8"
   - "pipenv sync"
 script:
+  - "flake8 ."
   - "python manage.py test"
-  - "pipenv run python manage.py test"
+  - "coverage run manage.py test"
 env:
   - DJANGO_SETTINGS_MODULE=MyInsurance.settings.local
+after_success: coveralls
