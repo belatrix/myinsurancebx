@@ -29,6 +29,3 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # noqa: F405
     }
 }
-
-# Configure Django App for Heroku.
-django_heroku.settings(locals(), test_runner=False)

@@ -4,6 +4,7 @@ DJANGO_SETTINGS_MODULE=MyInsurance.settings.production
 """
 
 import dj_database_url
+import django_heroku
 from .base import *  # noqa: F403,F401
 from utils.environment import env
 
@@ -20,6 +21,10 @@ DEBUG = True
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 ALLOWED_HOSTS = ['.herokuapp.com']
+
+
+# Configure Django App for Heroku
+django_heroku.settings(locals())
 
 
 # Database
