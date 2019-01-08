@@ -9,4 +9,4 @@ script:
   - "python manage.py test"
   - "pipenv run python manage.py test"
 env:
-  - DJANGO_SETTINGS_MODULE=AllStars.settings.local
+  - DJANGO_SETTINGS_MODULE=MyInsurance.settings.local
