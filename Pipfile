@@ -11,6 +11,9 @@ django-rest-swagger = "==2.2.0"
 "flake8" = "==3.6.0"
 django-heroku = "*"
 gunicorn = "*"
+pygments = "*"
+markdown = "*"
+django-pygments = "*"
 
 [dev-packages]
 

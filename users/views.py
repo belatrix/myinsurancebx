@@ -25,7 +25,7 @@ def user_detail(request, user_id):
 
 
 @api_view(['GET', ])
-@permission_classes((permissions.AllowAny,))
+@permission_classes((permissions.IsAuthenticated,))
 def user_list(request):
     """
     get:
