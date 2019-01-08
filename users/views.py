@@ -11,7 +11,7 @@ from .serializers import UserSerializer
 
 
 @api_view(['GET', ])
-@permission_classes((permissions.AllowAny,))
+@permission_classes((permissions.IsAuthenticated,))
 def user_detail(request, user_id):
     """
     Returns user detail
@@ -25,7 +25,7 @@ def user_detail(request, user_id):
 
 
 @api_view(['GET', ])
-@permission_classes((permissions.IsAuthenticated,))
+@permission_classes((permissions.IsAdminUser,))
 def user_list(request):
     """
     get:
