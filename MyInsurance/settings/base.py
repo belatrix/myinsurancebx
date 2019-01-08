@@ -34,6 +34,7 @@ THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     'users.apps.UsersConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + PROJECT_APPS

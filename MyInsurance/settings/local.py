@@ -29,3 +29,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # noqa: F405
     }
 }
+
+
+# MEDIA
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # noqa: F405
+MEDIA_URL = '/media/'
