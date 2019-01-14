@@ -14,6 +14,9 @@ gunicorn = "*"
 pygments = "*"
 markdown = "*"
 django-pygments = "*"
+django-storages = "*"
+boto3 = "*"
+eth-hash = {extras = ["pycryptodome"],version = "*"}
 
 [dev-packages]
 
