@@ -39,17 +39,3 @@ django_heroku.settings(locals())
 
 db_from_env = dj_database_url.config(conn_max_age=500, ssl_require=True)
 DATABASES['default'].update(db_from_env)  # noqa: F405
-
-# AWS
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', '')
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', '')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', '')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME)
-AWS_S3_OBJECTS_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_QUERYSTRING_AUTH = False
-AWS_DEFAULT_ACL = 'public-read'
-
-# Storage settings
-DEFAULT_FILE_STORAGE = 'MyInsurance.settings.storage_backends.MediaStorage'

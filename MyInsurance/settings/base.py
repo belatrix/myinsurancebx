@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from utils.environment import env
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # noqa: F405
@@ -30,6 +31,7 @@ DEFAULT_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
+    'storages',
 ]
 
 PROJECT_APPS = [
@@ -135,3 +137,21 @@ REST_FRAMEWORK = {
     ),
     'PAGE_SIZE': 30
 }
+
+# MEDIA
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # noqa: F405
+MEDIA_URL = '/media/'
+
+# AWS
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', '')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', '')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME)
+AWS_S3_OBJECTS_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_QUERYSTRING_AUTH = False
+AWS_DEFAULT_ACL = 'public-read'
+
+# Storage settings
+DEFAULT_FILE_STORAGE = 'MyInsurance.settings.storage_backends.MediaStorage'
