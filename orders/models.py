@@ -10,12 +10,18 @@ class Order(models.Model):
     accident_location = models.CharField(max_length=255)
     client = models.CharField(max_length=255)
 
+    def __str__(self):
+        return str(self.id)
+
 
 def myinsurance_filename(instance, filename):
     timestamp = int(time())
-    return 'myinsurance_folder/%s%d' % (instance, timestamp)
+    return 'myinsurance_folder/%d%s' % (timestamp, str(instance))
 
 
 class Attachment(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
     file = models.FileField(upload_to=myinsurance_filename, null=True, blank=True)
+
+    def __str__(self):
+        return self.file.name

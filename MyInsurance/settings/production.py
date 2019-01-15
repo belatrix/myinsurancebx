@@ -28,7 +28,7 @@ PRODUCTION_ONLY_APPS = [
     'storages',
 ]
 
-INSTALLED_APPS = INSTALLED_APPS + PRODUCTION_ONLY_APPS
+INSTALLED_APPS = INSTALLED_APPS + PRODUCTION_ONLY_APPS  # noqa: F405
 
 # Configure Django App for Heroku
 django_heroku.settings(locals())
