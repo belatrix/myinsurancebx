@@ -5,12 +5,24 @@ from django.db import models
 from utils.hash import keccak_hash_file
 
 
+class OrderStatus(models.Model):
+    name = models.CharField(max_length=100)
+    is_default = models.BooleanField(default=False)
+
+    class Meta(object):
+        verbose_name_plural = 'order statuses'
+
+    def __str__(self):
+        return self.name
+
+
 class Order(models.Model):
     car_model = models.CharField(max_length=255)
     created_by = models.ForeignKey('users.User', on_delete=models.PROTECT)
     plate_number = models.CharField(max_length=20)
     accident_location = models.CharField(max_length=255)
     client = models.CharField(max_length=255)
+    status = models.ForeignKey(OrderStatus, blank=True, null=True, on_delete=models.PROTECT)
 
     def __str__(self):
         return str(self.id)
