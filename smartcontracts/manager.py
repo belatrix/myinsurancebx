@@ -1,4 +1,4 @@
-from settings import CONTRACT_ADDRESS, WALLET_PRIVATE_KEY, WALLET_ADDRESSS
+from settings import CONTRACTS, CONTRACT_VERSION, WALLET_PRIVATE_KEY, WALLET_ADDRESS
 
 from django.db import models
 from web3 import Web3, HTTPProvider
@@ -52,7 +52,7 @@ class ContractManager(models.Manager):
     def stamp(ots_hash, file_hash):
 
         contract = ContractManager.get_current_contract()
-        return contract.functions.stamp(ots_hash, file_hash).transact({'from': Web3.toChecksumAddress(ACCOUNT_ADDRESS)})
+        return contract.functions.stamp(ots_hash, file_hash).transact({'from': Web3.toChecksumAddress(WALLET_ADDRESS)})
 
     @staticmethod
     def verify(contract_version, ots_hash, file_hash):
