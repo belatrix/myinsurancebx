@@ -23,6 +23,7 @@ class Order(models.Model):
     accident_location = models.CharField(max_length=255)
     client = models.CharField(max_length=255)
     status = models.ForeignKey(OrderStatus, blank=True, null=True, on_delete=models.PROTECT)
+    budget = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return str(self.id)
