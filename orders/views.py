@@ -20,3 +20,17 @@ def order_detail(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     serializer = OrderSerializer(order)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', ])
+@permission_classes((permissions.IsAuthenticated,))
+def order_list(request):
+    """
+    Returns order list
+    ---
+    GET:
+        response_serializer: orders.serializers.OrderSerializer
+    """
+    orders = Order.objects.all()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

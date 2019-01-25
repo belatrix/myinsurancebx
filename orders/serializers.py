@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Order
 from users.serializers import UserSerializer
 
+
 class OrderSerializer(serializers.ModelSerializer):
     created_by = UserSerializer()
 
