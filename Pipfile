@@ -17,6 +17,7 @@ django-pygments = "*"
 django-storages = "*"
 boto3 = "*"
 eth-hash = {extras = ["pycryptodome"],version = "*"}
+django-cors-headers = "*"
 
 [dev-packages]
 

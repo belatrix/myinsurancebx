@@ -31,6 +31,7 @@ DEFAULT_APPS = [
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
     'storages',
 ]
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -155,3 +157,24 @@ AWS_DEFAULT_ACL = 'public-read'
 
 # Storage settings
 DEFAULT_FILE_STORAGE = 'MyInsurance.settings.storage_backends.MediaStorage'
+
+# CORS
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = ('DELETE',
+                      'GET',
+                      'OPTIONS',
+                      'PATCH',
+                      'POST',
+                      'PUT',)
+CORS_ALLOW_HEADERS = ('accept',
+                      'accept-encoding',
+                      'accept-language',
+                      'authorization',
+                      'content-type',
+                      'dnt',
+                      'origin',
+                      'user-agent',
+                      'x-csrftoken',
+                      'x-requested-with',)
+CORS_EXPOSE_HEADERS = ('Access-Control-Allow-Origin',
+                       'Access-Control-Allow-Headers')
