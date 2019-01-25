@@ -27,5 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('users/', include('users.urls')),
+    path('orders/', include('orders.urls')),
     path('docs/', include_docs_urls(title='My Insurance Company')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
