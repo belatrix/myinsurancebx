@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from .models import Order
 from .serializers import OrderSerializer
+from users.models import User
 
 
 @api_view(['GET', ])
@@ -27,10 +28,12 @@ def order_detail(request, order_id):
 def order_list(request):
     """
     Returns order list
-    ---
-    GET:
-        response_serializer: orders.serializers.OrderSerializer
     """
-    orders = Order.objects.all()
+    if request.GET.get('user'):
+        user_id = request.GET.get('user')
+        user = get_object_or_404(User, pk=user_id)
+        orders = Order.objects.filter(created_by=user)
+    else:
+        orders = Order.objects.all()
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
