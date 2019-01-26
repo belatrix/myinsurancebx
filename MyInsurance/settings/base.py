@@ -33,6 +33,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'storages',
+    'rest_framework_swagger',
 ]
 
 PROJECT_APPS = [

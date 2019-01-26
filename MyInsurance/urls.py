@@ -21,12 +21,16 @@ from django.urls import include
 
 
 from rest_framework.documentation import include_docs_urls
+from rest_framework_swagger.views import get_swagger_view
 
+
+schema_view = get_swagger_view(title='My Insurance Company')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('users/', include('users.urls')),
-    path('orders/', include('orders.urls')),
     path('docs/', include_docs_urls(title='My Insurance Company')),
+    path('orders/', include('orders.urls')),
+    path('swagger/', schema_view),
+    path('users/', include('users.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
