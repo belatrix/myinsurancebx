@@ -11,3 +11,10 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
         depth = 1
+
+
+class OrderCreationSerializer(serializers.Serializer):
+    car_model = serializers.CharField()
+    plate_number = serializers.CharField()
+    accident_location = serializers.CharField()
+    client = serializers.CharField()
