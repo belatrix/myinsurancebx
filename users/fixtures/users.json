@@ -1,0 +1,121 @@
+[{
+	"model": "users.user",
+	"pk": 1,
+	"fields": {
+		"password": "pbkdf2_sha256$120000$CGF8EfoL6qCp$4i1Z31qHl8ncdd+A3p+IZ92qnSlqcKsFdpHJWfdeG2M=",
+		"last_login": "2019-01-26T14:56:55Z",
+		"is_superuser": true,
+		"username": "sergio",
+		"first_name": "",
+		"last_name": "",
+		"email": "",
+		"is_staff": true,
+		"is_active": true,
+		"date_joined": "2019-01-26T14:56:41Z",
+		"is_inspector": true,
+		"is_from_insurance": true,
+		"is_from_auto_repair_shop": true,
+		"groups": [],
+		"user_permissions": []
+	}
+}, {
+	"model": "users.user",
+	"pk": 2,
+	"fields": {
+		"password": "pbkdf2_sha256$120000$hZHFzvYvxiD6$Iyy1EdQkL2HsYIa6U0V9y5t592W67v8l3c+XBLLj/ug=",
+		"last_login": null,
+		"is_superuser": true,
+		"username": "diego",
+		"first_name": "",
+		"last_name": "",
+		"email": "",
+		"is_staff": true,
+		"is_active": true,
+		"date_joined": "2019-01-26T14:57:52Z",
+		"is_inspector": true,
+		"is_from_insurance": true,
+		"is_from_auto_repair_shop": true,
+		"groups": [],
+		"user_permissions": []
+	}
+}, {
+	"model": "users.user",
+	"pk": 3,
+	"fields": {
+		"password": "pbkdf2_sha256$120000$NS9b3kuYyXUF$FJcix/iA3I1VPhdEPxyyysRPvh7+VdkAVPPZtnaPQm8=",
+		"last_login": null,
+		"is_superuser": true,
+		"username": "hernan",
+		"first_name": "",
+		"last_name": "",
+		"email": "",
+		"is_staff": true,
+		"is_active": true,
+		"date_joined": "2019-01-27T12:40:29Z",
+		"is_inspector": true,
+		"is_from_insurance": true,
+		"is_from_auto_repair_shop": true,
+		"groups": [],
+		"user_permissions": []
+	}
+}, {
+	"model": "users.user",
+	"pk": 4,
+	"fields": {
+		"password": "pbkdf2_sha256$120000$ttAJvT09quLF$7W2RzWyp8o0JzvR6gHhY76I5GjHsTBBkzWGCF7GvQI4=",
+		"last_login": null,
+		"is_superuser": false,
+		"username": "inspector",
+		"first_name": "",
+		"last_name": "",
+		"email": "",
+		"is_staff": false,
+		"is_active": true,
+		"date_joined": "2019-01-27T12:41:14Z",
+		"is_inspector": true,
+		"is_from_insurance": false,
+		"is_from_auto_repair_shop": false,
+		"groups": [],
+		"user_permissions": []
+	}
+}, {
+	"model": "users.user",
+	"pk": 5,
+	"fields": {
+		"password": "pbkdf2_sha256$120000$8LQuGNajpmbT$43TNXcrGJnfKGLo5/ORs1BMhHPZyxbQixkAyBjXtuXk=",
+		"last_login": null,
+		"is_superuser": false,
+		"username": "aseguradora",
+		"first_name": "",
+		"last_name": "",
+		"email": "",
+		"is_staff": false,
+		"is_active": true,
+		"date_joined": "2019-01-27T12:41:48Z",
+		"is_inspector": false,
+		"is_from_insurance": true,
+		"is_from_auto_repair_shop": false,
+		"groups": [],
+		"user_permissions": []
+	}
+}, {
+	"model": "users.user",
+	"pk": 6,
+	"fields": {
+		"password": "pbkdf2_sha256$120000$YS7rkmILgRyu$EImUOq56/kndrtk2GlPUAoxUiz56ySA0+DG2Qi7/0bw=",
+		"last_login": null,
+		"is_superuser": false,
+		"username": "taller",
+		"first_name": "",
+		"last_name": "",
+		"email": "",
+		"is_staff": false,
+		"is_active": true,
+		"date_joined": "2019-01-27T12:43:04Z",
+		"is_inspector": false,
+		"is_from_insurance": false,
+		"is_from_auto_repair_shop": true,
+		"groups": [],
+		"user_permissions": []
+	}
+}]

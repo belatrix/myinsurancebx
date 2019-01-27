@@ -1,0 +1,29 @@
+[{
+	"model": "orders.orderstatus",
+	"pk": 1,
+	"fields": {
+		"name": "Inspeccionado",
+		"is_default": true
+	}
+}, {
+	"model": "orders.orderstatus",
+	"pk": 2,
+	"fields": {
+		"name": "Autorizado",
+		"is_default": false
+	}
+}, {
+	"model": "orders.orderstatus",
+	"pk": 3,
+	"fields": {
+		"name": "Cotizado",
+		"is_default": false
+	}
+}, {
+	"model": "orders.orderstatus",
+	"pk": 4,
+	"fields": {
+		"name": "Aprobado",
+		"is_default": false
+	}
+}]
