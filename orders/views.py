@@ -8,10 +8,11 @@ from rest_framework.response import Response
 from .models import Order, OrderStatus
 from .serializers import OrderSerializer, OrderCreationSerializer
 from users.models import User
+from users.permissions import IsInspectorOrStaff
 
 
 @api_view(['POST', ])
-@permission_classes((permissions.IsAuthenticated,))
+@permission_classes((IsInspectorOrStaff,))
 def order_creation(request):
     """
     Creates a new order
