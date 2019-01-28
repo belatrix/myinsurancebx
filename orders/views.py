@@ -69,7 +69,7 @@ def order_list(request):
 
     if request.GET.get('status'):
         status_id = request.GET.get('status')
-        order_status= get_object_or_404(OrderStatus, pk=status_id)
+        order_status = get_object_or_404(OrderStatus, pk=status_id)
         orders = orders.filter(status=order_status)
 
     serializer = OrderSerializer(orders, many=True)

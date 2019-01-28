@@ -50,9 +50,11 @@ class CustomAuthToken(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'is_inspector': user.is_inspector,
-            'is_from_insurance': user.is_from_insurance,
-            'is_from_auto_repair_shop': user.is_from_auto_repair_shop,
+            "data": [{
+                'token': token.key,
+                'user_id': user.pk,
+                'is_inspector': user.is_inspector,
+                'is_from_insurance': user.is_from_insurance,
+                'is_from_auto_repair_shop': user.is_from_auto_repair_shop,
+            }]
         })
