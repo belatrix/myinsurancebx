@@ -60,11 +60,17 @@ def order_list(request):
     """
     Returns order list
     """
+    orders = Order.objects.all()
+
     if request.GET.get('user'):
         user_id = request.GET.get('user')
         user = get_object_or_404(User, pk=user_id)
-        orders = Order.objects.filter(created_by=user)
-    else:
-        orders = Order.objects.all()
+        orders = orders.filter(created_by=user)
+
+    if request.GET.get('status'):
+        status_id = request.GET.get('status')
+        order_status= get_object_or_404(OrderStatus, pk=status_id)
+        orders = orders.filter(status=order_status)
+
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
