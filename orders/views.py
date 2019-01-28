@@ -74,3 +74,30 @@ def order_list(request):
 
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['PATCH', ])
+@permission_classes((IsInspectorOrStaff,))
+def order_update(request, order_id):
+    """
+    Update an order
+    ---
+    PATCH:
+        serializer: orders.serializers.OrderCreationSerializer
+    """
+    serializer = OrderCreationSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        try:
+            Order.objects.filter(pk=order_id).update(
+                car_model=serializer.validated_data['car_model'],
+                plate_number=serializer.validated_data['plate_number'],
+                accident_location=serializer.validated_data['accident_location'],
+                client=serializer.validated_data['client'],
+            )
+        except Exception as e:
+            print(e)
+            raise NotAcceptable('Not valid.')
+        order = get_object_or_404(Order, pk=order_id)
+        serializer = OrderSerializer(order)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
