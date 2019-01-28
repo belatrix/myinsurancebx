@@ -1,7 +1,15 @@
 from rest_framework import serializers
 
-from .models import Order
+from .models import Order, Attachment
 from users.serializers import UserSerializer
+
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    uploaded_by = UserSerializer()
+
+    class Meta(object):
+        model = Attachment
+        fields = '__all__'
 
 
 class OrderSerializer(serializers.ModelSerializer):

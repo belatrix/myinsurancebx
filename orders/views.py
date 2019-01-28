@@ -5,8 +5,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import NotAcceptable
 from rest_framework.response import Response
 
-from .models import Order, OrderStatus
-from .serializers import OrderSerializer, OrderCreationSerializer
+from .models import Order, OrderStatus, Attachment
+from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSerializer
 from users.models import User
 from users.permissions import IsInspectorOrStaff
 
@@ -101,3 +101,16 @@ def order_update(request, order_id):
         serializer = OrderSerializer(order)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
+
+@api_view(['POST', ])
+@permission_classes((IsInspectorOrStaff,))
+def upload_file(request, order_id):
+    """
+    Upload a file
+    """
+    order = get_object_or_404(Order, pk=order_id)
+    file_to_upload = request.FILES['file']
+    pre_attachment = Attachment.objects.create(order=order, file=file_to_upload, uploaded_by=request.user)
+    attachment = get_object_or_404(Attachment, pk=pre_attachment.id)
+    serializer = AttachmentSerializer(attachment)
+    return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
