@@ -51,7 +51,7 @@ class CustomAuthToken(ObtainAuthToken):
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             "data": [{
-                'token': token.key,
+                'authToken': token.key,
                 'user_id': user.pk,
                 'is_inspector': user.is_inspector,
                 'is_from_insurance': user.is_from_insurance,
