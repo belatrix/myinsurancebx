@@ -76,6 +76,20 @@ def order_list(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@api_view(['PATCH', ])
+@permission_classes((IsInsuranceOrStaff,))
+def order_status_change(request, order_id, status_id):
+    """
+    Changes order status for an order
+    """
+    order_status = get_object_or_404(OrderStatus, pk=status_id)
+    order = get_object_or_404(Order, pk=order_id)
+    order.status = order_status
+    order.save()
+    serializer = OrderSerializer(order)
+    return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
 @api_view(['GET', ])
 @permission_classes((IsInsuranceOrStaff,))
 def order_status_list(request):
