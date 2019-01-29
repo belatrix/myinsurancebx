@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import order_creation, order_detail, order_list, order_update, upload_file
+from .views import order_creation, order_detail, order_list, order_update, upload_file, order_status_list
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:order_id>/update/', order_update, name='order_update'),
     path('<int:order_id>/upload/file/', upload_file, name='upload_file'),
     path('list/', order_list, name='order_list'),
+    path('status/list/', order_status_list, name='order_status_list'),
 ]

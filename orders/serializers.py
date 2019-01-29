@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Order, Attachment
+from .models import Order, OrderStatus, Attachment
 from users.serializers import UserSerializer
 
 
@@ -26,3 +26,9 @@ class OrderCreationSerializer(serializers.Serializer):
     plate_number = serializers.CharField()
     accident_location = serializers.CharField()
     client = serializers.CharField()
+
+
+class OrderStatusSerializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = OrderStatus
+        fields = '__all__'

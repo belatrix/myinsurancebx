@@ -6,9 +6,9 @@ from rest_framework.exceptions import NotAcceptable
 from rest_framework.response import Response
 
 from .models import Order, OrderStatus, Attachment
-from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSerializer
+from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSerializer, OrderStatusSerializer
 from users.models import User
-from users.permissions import IsInspectorOrStaff
+from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff
 
 
 @api_view(['POST', ])
@@ -73,6 +73,17 @@ def order_list(request):
         orders = orders.filter(status=order_status)
 
     serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', ])
+@permission_classes((IsInsuranceOrStaff,))
+def order_status_list(request):
+    """
+    Returns order status list
+    """
+    order_statuses = OrderStatus.objects.all()
+    serializer = OrderStatusSerializer(order_statuses, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
