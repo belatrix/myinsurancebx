@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import logout
 
 from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
@@ -34,6 +35,16 @@ def user_list(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST', ])
+@permission_classes((permissions.IsAuthenticated, ))
+def user_logout(request):
+    """
+    Logout current user
+    """
+    logout(request)
+    return Response(status=status.HTTP_202_ACCEPTED)
 
 
 class CustomAuthToken(ObtainAuthToken):
