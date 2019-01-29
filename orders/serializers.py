@@ -28,6 +28,10 @@ class OrderSerializer(serializers.ModelSerializer):
         depth = 1
 
 
+class OrderBudgetSerializer(serializers.Serializer):
+    budget = serializers.CharField()
+
+
 class OrderCreationSerializer(serializers.Serializer):
     car_model = serializers.CharField()
     plate_number = serializers.CharField()

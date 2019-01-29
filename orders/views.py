@@ -7,9 +7,9 @@ from rest_framework.response import Response
 
 from .models import Order, OrderStatus, Attachment, AutoRepairShop
 from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSerializer, OrderStatusSerializer
-from .serializers import AutoRepairShopSerializer
+from .serializers import AutoRepairShopSerializer, OrderBudgetSerializer
 from users.models import User
-from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff
+from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff, IsAutoRepairShopOrStaff
 
 
 @api_view(['GET', ])
@@ -21,6 +21,22 @@ def auto_repair_shop_list(request):
     repair_shop_list = AutoRepairShop.objects.all()
     serializer = AutoRepairShopSerializer(repair_shop_list, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['PATCH', ])
+@permission_classes((IsAutoRepairShopOrStaff, ))
+def order_budget_update(request, order_id):
+    """
+    Update budget for order
+    """
+    serializer = OrderBudgetSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        order = get_object_or_404(Order, pk=order_id)
+        budget = serializer.validated_data['budget']
+        order.budget = budget
+        order.save()
+        serializer = OrderSerializer(order)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
 @api_view(['POST', ])
