@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, Attachment, OrderStatus
+from .models import Order, Attachment, OrderStatus, AutoRepairShop
 
 
 class AttachmentAdmin(admin.ModelAdmin):
@@ -17,3 +17,4 @@ class OrderStatusAdmin(admin.ModelAdmin):
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderStatus, OrderStatusAdmin)
 admin.site.register(Attachment, AttachmentAdmin)
+admin.site.register(AutoRepairShop)

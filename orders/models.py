@@ -50,3 +50,15 @@ class Attachment(models.Model):
 
     def __str__(self):
         return self.file.name
+
+
+class AutoRepairShop(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=255)
+
+    class Meta(object):
+        verbose_name = 'auto repair shop'
+        verbose_name_plural = 'auto repair shops'
+
+    def __str__(self):
+        return self.name

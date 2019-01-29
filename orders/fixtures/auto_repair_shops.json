@@ -1,0 +1,36 @@
+[{
+	"model": "orders.autorepairshop",
+	"pk": 1,
+	"fields": {
+		"name": "West Coast Customs",
+		"address": "502 Coney Island Ave"
+	}
+}, {
+	"model": "orders.autorepairshop",
+	"pk": 2,
+	"fields": {
+		"name": "OverHaulling",
+		"address": "542 3rd Ave"
+	}
+}, {
+	"model": "orders.autorepairshop",
+	"pk": 3,
+	"fields": {
+		"name": "Eastern Auto Repair",
+		"address": "58-94 Grand Ave"
+	}
+}, {
+	"model": "orders.autorepairshop",
+	"pk": 4,
+	"fields": {
+		"name": "Monkey Wrench Inc",
+		"address": "1844 Utica Ave"
+	}
+}, {
+	"model": "orders.autorepairshop",
+	"pk": 5,
+	"fields": {
+		"name": "Urban Classics Auto Repair",
+		"address": "3637 21st St"
+	}
+}]
