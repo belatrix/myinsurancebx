@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import order_creation, order_detail, order_list, order_update, upload_file, order_status_list
-from .views import order_status_change
+from .views import order_status_change, auto_repair_shop_list
 
 urlpatterns = [
     path('create/', order_creation, name='order_creation'),
@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:order_id>/upload/file/', upload_file, name='upload_file'),
     path('list/', order_list, name='order_list'),
     path('status/list/', order_status_list, name='order_status_list'),
+    path('repairshop/list/', auto_repair_shop_list, name='auto_repair_shop_list'),
 ]

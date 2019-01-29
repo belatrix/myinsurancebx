@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Order, OrderStatus, Attachment
+from .models import Order, OrderStatus, Attachment, AutoRepairShop
 from users.serializers import UserSerializer
 
 
@@ -9,6 +9,13 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
     class Meta(object):
         model = Attachment
+        fields = '__all__'
+
+
+class AutoRepairShopSerializer(serializers.ModelSerializer):
+
+    class Meta(object):
+        model = AutoRepairShop
         fields = '__all__'
 
 

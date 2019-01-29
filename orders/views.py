@@ -5,10 +5,22 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import NotAcceptable
 from rest_framework.response import Response
 
-from .models import Order, OrderStatus, Attachment
+from .models import Order, OrderStatus, Attachment, AutoRepairShop
 from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSerializer, OrderStatusSerializer
+from .serializers import AutoRepairShopSerializer
 from users.models import User
 from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff
+
+
+@api_view(['GET', ])
+@permission_classes((IsInsuranceOrStaff, ))
+def auto_repair_shop_list(request):
+    """
+    Returns auto repair shop list
+    """
+    repair_shop_list = AutoRepairShop.objects.all()
+    serializer = AutoRepairShopSerializer(repair_shop_list, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['POST', ])
