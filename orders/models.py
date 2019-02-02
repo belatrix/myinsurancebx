@@ -22,6 +22,9 @@ class Order(models.Model):
     plate_number = models.CharField(max_length=20)
     accident_location = models.CharField(max_length=255)
     client = models.CharField(max_length=255)
+    client_policy_number = models.CharField(max_length=10, blank=True, null=True)
+    expiration_date = models.DateField(blank=True, null=True)
+    is_behind_payment = models.BooleanField(blank=True, null=True)
     status = models.ForeignKey(OrderStatus, blank=True, null=True, on_delete=models.PROTECT)
     budget = models.PositiveIntegerField(blank=True, null=True)
 
