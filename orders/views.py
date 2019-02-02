@@ -10,6 +10,7 @@ from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSer
 from .serializers import AutoRepairShopSerializer, OrderBudgetSerializer
 from users.models import User
 from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff, IsAutoRepairShopOrStaff
+from utils.customrandom import random_boolean, random_document_number, random_date_using_range_days
 
 
 @api_view(['GET', ])
@@ -61,6 +62,10 @@ def order_creation(request):
                 client=serializer.validated_data['client'],
                 status=initial_status,
             )
+            order.is_behind_payment = random_boolean()
+            order.client_policy_number = random_document_number(8)
+            order.expiration_date = random_date_using_range_days(10).date()
+            order.save()
         except Exception as e:
             print(e)
             raise NotAcceptable('Not valid.')
