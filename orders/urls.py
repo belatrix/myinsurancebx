@@ -1,10 +1,12 @@
 from django.urls import path
 
+from .views import order_bulk_deletion
 from .views import order_creation, order_detail, order_list, order_update, upload_file, order_status_list
 from .views import order_status_change, auto_repair_shop_list, order_budget_update
 
 urlpatterns = [
     path('create/', order_creation, name='order_creation'),
+    path('delete/list/', order_bulk_deletion, name='order_bulk_deletion'),
     path('<int:order_id>/budget/change/', order_budget_update, name='order_budget_update'),
     path('<int:order_id>/detail/', order_detail, name='order_detail'),
     path('<int:order_id>/status/change/to/<int:status_id>', order_status_change, name='order_status_change'),

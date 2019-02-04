@@ -9,7 +9,7 @@ from .models import Order, OrderStatus, Attachment, AutoRepairShop
 from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSerializer, OrderStatusSerializer
 from .serializers import AutoRepairShopSerializer, OrderBudgetSerializer
 from users.models import User
-from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff, IsAutoRepairShopOrStaff
+from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff, IsAutoRepairShopOrStaff, IsStaff
 from utils.customrandom import random_boolean, random_document_number, random_date_using_range_days
 
 
@@ -38,6 +38,18 @@ def order_budget_update(request, order_id):
         order.save()
         serializer = OrderSerializer(order)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
+@api_view(['DELETE', ])
+@permission_classes((IsStaff, ))
+def order_bulk_deletion(request):
+    """
+    Emergency RED button for orders: DELETES all orders
+    """
+    orders = Order.objects.all()
+    orders.delete()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
 @api_view(['POST', ])
