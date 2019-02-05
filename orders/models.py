@@ -17,11 +17,11 @@ class OrderStatus(models.Model):
 
 
 class Order(models.Model):
-    car_model = models.CharField(max_length=255)
+    car_model = models.CharField(max_length=255, blank=True, null=True)
     created_by = models.ForeignKey('users.User', on_delete=models.PROTECT)
-    plate_number = models.CharField(max_length=20)
-    accident_location = models.CharField(max_length=255)
-    client = models.CharField(max_length=255)
+    plate_number = models.CharField(max_length=20, blank=True, null=True)
+    accident_location = models.CharField(max_length=255, blank=True, null=True)
+    client = models.CharField(max_length=255, blank=True, null=True)
     client_policy_number = models.CharField(max_length=10, blank=True, null=True)
     expiration_date = models.DateField(blank=True, null=True)
     is_behind_payment = models.BooleanField(blank=True, null=True)
