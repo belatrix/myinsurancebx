@@ -3,7 +3,7 @@
 	"pk": 1,
 	"fields": {
 		"name": "Inspeccionado",
-		"is_default": true
+		"is_default": false
 	}
 }, {
 	"model": "orders.orderstatus",
@@ -25,5 +25,12 @@
 	"fields": {
 		"name": "Aprobado",
 		"is_default": false
+	}
+}, {
+	"model": "orders.orderstatus",
+	"pk": 5,
+	"fields": {
+		"name": "Nuevo",
+		"is_default": true
 	}
 }]
