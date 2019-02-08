@@ -7,7 +7,7 @@ class AttachmentAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_by', 'status', 'budget')
+    list_display = ('id', 'created_by', 'status', 'budget', 'created_at', 'priority')
 
 
 class OrderStatusAdmin(admin.ModelAdmin):

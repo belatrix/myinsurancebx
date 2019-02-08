@@ -19,6 +19,8 @@ class OrderStatus(models.Model):
 class Order(models.Model):
     car_model = models.CharField(max_length=255, blank=True, null=True)
     created_by = models.ForeignKey('users.User', on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+    priority = models.PositiveIntegerField(default=1)
     plate_number = models.CharField(max_length=20, blank=True, null=True)
     accident_location = models.CharField(max_length=255, blank=True, null=True)
     client = models.CharField(max_length=255, blank=True, null=True)
@@ -27,6 +29,9 @@ class Order(models.Model):
     is_behind_payment = models.BooleanField(blank=True, null=True)
     status = models.ForeignKey(OrderStatus, blank=True, null=True, on_delete=models.PROTECT)
     budget = models.PositiveIntegerField(blank=True, null=True)
+
+    class Meta(object):
+        ordering = ['priority']
 
     def __str__(self):
         return str(self.id)
