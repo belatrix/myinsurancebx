@@ -1,11 +1,10 @@
-from settings import CONTRACTS, CONTRACT_VERSION, WALLET_PRIVATE_KEY, WALLET_ADDRESS
+from settings import CONTRACTS, CONTRACT_VERSION, ACCOUNT_ADDRESS
 
 from django.db import models
 from web3 import Web3, HTTPProvider
 from web3.exceptions import CannotHandleRequest, UnhandledRequest
-from TsaApi.settings import HOST_ADDRESS
+from local_settings import HOST_ADDRESS
 from web3.middleware import geth_poa_middleware
-
 
 
 class ContractManager(models.Manager):
@@ -52,7 +51,7 @@ class ContractManager(models.Manager):
     def stamp(ots_hash, file_hash):
 
         contract = ContractManager.get_current_contract()
-        return contract.functions.stamp(ots_hash, file_hash).transact({'from': Web3.toChecksumAddress(WALLET_ADDRESS)})
+        return contract.functions.stamp(ots_hash, file_hash).transact({'from': Web3.toChecksumAddress(ACCOUNT_ADDRESS)})
 
     @staticmethod
     def verify(contract_version, ots_hash, file_hash):
@@ -63,4 +62,3 @@ class ContractManager(models.Manager):
     def get_block_number(contract_version, ots_hash):
         contract = ContractManager.get_contract(contract_version)
         return contract.functions.getBlockNumber(ots_hash).call()
-
