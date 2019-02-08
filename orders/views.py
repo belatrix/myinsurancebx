@@ -123,6 +123,19 @@ def order_list(request):
 
 @api_view(['PATCH', ])
 @permission_classes((IsInsuranceOrStaff,))
+def order_priority_change(request, order_id, priority):
+    """
+    Changes order priority
+    """
+    order = get_object_or_404(Order, pk=order_id)
+    order.priority = int(priority)
+    order.save()
+    serializer = OrderSerializer(order)
+    return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
+@api_view(['PATCH', ])
+@permission_classes((IsInsuranceOrStaff,))
 def order_status_change(request, order_id, status_id):
     """
     Changes order status for an order
