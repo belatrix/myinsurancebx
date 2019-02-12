@@ -8,9 +8,11 @@ from utils.hash import keccak_hash_file
 class OrderStatus(models.Model):
     name = models.CharField(max_length=100)
     is_default = models.BooleanField(default=False)
+    ordering = models.PositiveIntegerField(default=0)
 
     class Meta(object):
         verbose_name_plural = 'order statuses'
+        ordering = ['ordering']
 
     def __str__(self):
         return self.name

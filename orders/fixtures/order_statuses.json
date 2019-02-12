@@ -3,41 +3,47 @@
 	"pk": 1,
 	"fields": {
 		"name": "Inspected",
-		"is_default": false
+		"is_default": false,
+		"ordering": 2
 	}
 }, {
 	"model": "orders.orderstatus",
 	"pk": 2,
 	"fields": {
 		"name": "Authorized",
-		"is_default": false
+		"is_default": false,
+		"ordering": 4
 	}
 }, {
 	"model": "orders.orderstatus",
 	"pk": 3,
 	"fields": {
 		"name": "Valued",
-		"is_default": false
+		"is_default": false,
+		"ordering": 5
 	}
 }, {
 	"model": "orders.orderstatus",
 	"pk": 4,
 	"fields": {
 		"name": "Approved",
-		"is_default": false
+		"is_default": false,
+		"ordering": 3
 	}
 }, {
 	"model": "orders.orderstatus",
 	"pk": 5,
 	"fields": {
 		"name": "New",
-		"is_default": true
+		"is_default": true,
+		"ordering": 1
 	}
 }, {
 	"model": "orders.orderstatus",
 	"pk": 6,
 	"fields": {
 		"name": "Denied",
-		"is_default": false
+		"is_default": false,
+		"ordering": 6
 	}
 }]
