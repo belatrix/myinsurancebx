@@ -33,7 +33,7 @@ class Order(models.Model):
     budget = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta(object):
-        ordering = ['priority']
+        ordering = ['priority', '-id']
 
     def __str__(self):
         return str(self.id)
