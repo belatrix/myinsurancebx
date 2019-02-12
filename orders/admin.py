@@ -11,7 +11,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 class OrderStatusAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'is_default')
+    list_display = ('id', 'name', 'is_default', 'ordering')
 
 
 admin.site.register(Order, OrderAdmin)
