@@ -18,6 +18,18 @@ class OrderStatus(models.Model):
         return self.name
 
 
+class AutoRepairShop(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=255)
+
+    class Meta(object):
+        verbose_name = 'auto repair shop'
+        verbose_name_plural = 'auto repair shops'
+
+    def __str__(self):
+        return self.name
+
+
 class Order(models.Model):
     car_model = models.CharField(max_length=255, blank=True, null=True)
     created_by = models.ForeignKey('users.User', on_delete=models.PROTECT)
@@ -31,6 +43,11 @@ class Order(models.Model):
     is_behind_payment = models.BooleanField(blank=True, null=True)
     status = models.ForeignKey(OrderStatus, blank=True, null=True, on_delete=models.PROTECT)
     budget = models.PositiveIntegerField(blank=True, null=True)
+    auto_repair_shop = models.ForeignKey(AutoRepairShop,
+                                         on_delete=models.PROTECT,
+                                         related_name="repairshop_order",
+                                         blank=True,
+                                         null=True)
 
     class Meta(object):
         ordering = ['priority', '-id']
@@ -60,15 +77,3 @@ class Attachment(models.Model):
 
     def __str__(self):
         return self.file.name
-
-
-class AutoRepairShop(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=255)
-
-    class Meta(object):
-        verbose_name = 'auto repair shop'
-        verbose_name_plural = 'auto repair shops'
-
-    def __str__(self):
-        return self.name

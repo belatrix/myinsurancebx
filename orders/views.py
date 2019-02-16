@@ -14,6 +14,20 @@ from utils.customrandom import random_boolean, random_document_number, random_da
 from utils.pagination import StandardResultsSetPagination
 
 
+@api_view(['PATCH', ])
+@permission_classes((IsInsuranceOrStaff, ))
+def auto_repair_shop_assign(request, order_id, repairshop_id):
+    """
+    Assigns auto repair shop to an order
+    """
+    order = get_object_or_404(Order, pk=order_id)
+    repairshop = get_object_or_404(AutoRepairShop, pk=repairshop_id)
+    order.auto_repair_shop = repairshop
+    order.save()
+    serializer = OrderSerializer(order)
+    return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
 @api_view(['GET', ])
 @permission_classes((IsInsuranceOrStaff, ))
 def auto_repair_shop_list(request):
