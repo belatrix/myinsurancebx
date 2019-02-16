@@ -45,7 +45,7 @@ def myinsurance_filename(instance, filename):
 
 
 class Attachment(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order_attachment")
     file = models.FileField(upload_to=myinsurance_filename)
     uploaded_by = models.ForeignKey('users.User', on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
