@@ -10,9 +10,9 @@ from rest_framework.schemas import ManualSchema
 import coreschema
 import coreapi
 
-from managers import ContractManager
-from utils import Utils
-from local_settings import TEMPORARY_OTS_PREFIX, PERMANENT_OTS_PREFIX, CONTRACTS
+from .manager import ContractManager
+from .utils import Utils
+from .local_settings import TEMPORARY_OTS_PREFIX, PERMANENT_OTS_PREFIX, CONTRACTS
 
 
 class Stamp(APIView):
@@ -56,7 +56,7 @@ class Stamp(APIView):
 
             tx_hash = ContractManager.stamp(ots_hash, file_hash)
 
-            #Al OTS se le agrega la transacción para poder verificar luego si está pendiente de subida
+            # Al OTS se le agrega la transacción para poder verificar luego si está pendiente de subida
             ots = TEMPORARY_OTS_PREFIX + '-' + ots_hash + '-' + tx_hash.hex()
 
             return Response({_('status'): _('success'), _('temporary_ots'): base64.b64encode(ots.encode('utf-8')).decode('utf-8')}, status=status.HTTP_200_OK)

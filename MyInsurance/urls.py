@@ -33,4 +33,5 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
     path('swagger/', schema_view),
     path('users/', include('users.urls')),
+    path('smartcontracts/', include('smartcontracts.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

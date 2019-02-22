@@ -107,6 +107,9 @@ venv.bak/
 .idea/
 .vscode/
 
-# SmartContracts
+# Compiled SmartContracts
 *.abi
 *.ots
+
+# Pyethereum
+pyethereum/

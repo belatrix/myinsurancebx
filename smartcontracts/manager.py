@@ -1,9 +1,8 @@
-from settings import CONTRACTS, CONTRACT_VERSION, ACCOUNT_ADDRESS
+from .local_settings import CONTRACTS, CONTRACT_VERSION, ACCOUNT_ADDRESS, HOST_ADDRESS
 
 from django.db import models
 from web3 import Web3, HTTPProvider
 from web3.exceptions import CannotHandleRequest, UnhandledRequest
-from local_settings import HOST_ADDRESS
 from web3.middleware import geth_poa_middleware
 
 

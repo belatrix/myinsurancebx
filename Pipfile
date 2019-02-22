@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+coreapi = "*""
+coreschema = "*"
 django = "==2.1.5"
 djangorestframework = "==3.9.0"
 django-rest-swagger = "==2.2.0"
@@ -17,7 +19,16 @@ django-pygments = "*"
 django-storages = "*"
 boto3 = "*"
 eth-hash = {extras = ["pycryptodome"],version = "*"}
+eth-abi = "*"
+eth-account = "*"
+eth-keyfile = "*"
+eth-keys = "*"
+eth-rlp = "*"
+eth-utils = "*"
 django-cors-headers = "*"
+raven = "*"
+web3 = "*"
+websockets = "*"
 
 [dev-packages]
 
