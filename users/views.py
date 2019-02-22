@@ -64,6 +64,7 @@ class CustomAuthToken(ObtainAuthToken):
             "data": [{
                 'authToken': token.key,
                 'user_id': user.pk,
+                'username': user.username,
                 'is_inspector': user.is_inspector,
                 'is_from_insurance': user.is_from_insurance,
                 'is_from_auto_repair_shop': user.is_from_auto_repair_shop,

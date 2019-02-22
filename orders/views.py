@@ -11,6 +11,21 @@ from .serializers import AutoRepairShopSerializer, OrderBudgetSerializer
 from users.models import User
 from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff, IsAutoRepairShopOrStaff, IsStaff
 from utils.customrandom import random_boolean, random_document_number, random_date_using_range_days
+from utils.pagination import StandardResultsSetPagination
+
+
+@api_view(['PATCH', ])
+@permission_classes((IsInsuranceOrStaff, ))
+def auto_repair_shop_assign(request, order_id, repairshop_id):
+    """
+    Assigns auto repair shop to an order
+    """
+    order = get_object_or_404(Order, pk=order_id)
+    repairshop = get_object_or_404(AutoRepairShop, pk=repairshop_id)
+    order.auto_repair_shop = repairshop
+    order.save()
+    serializer = OrderSerializer(order)
+    return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
 @api_view(['GET', ])
@@ -20,8 +35,14 @@ def auto_repair_shop_list(request):
     Returns auto repair shop list
     """
     repair_shop_list = AutoRepairShop.objects.all()
-    serializer = AutoRepairShopSerializer(repair_shop_list, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.GET.get('page') or request.GET.get('per_page'):
+        paginator = StandardResultsSetPagination()
+        results = paginator.paginate_queryset(repair_shop_list, request)
+        serializer = AutoRepairShopSerializer(results, many=True)
+        return paginator.get_paginated_response(serializer.data)
+    else:
+        serializer = AutoRepairShopSerializer(repair_shop_list, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['PATCH', ])
@@ -117,8 +138,14 @@ def order_list(request):
         order_status = get_object_or_404(OrderStatus, pk=status_id)
         orders = orders.filter(status=order_status)
 
-    serializer = OrderSerializer(orders, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.GET.get('page') or request.GET.get('per_page'):
+        paginator = StandardResultsSetPagination()
+        results = paginator.paginate_queryset(orders, request)
+        serializer = OrderSerializer(results, many=True)
+        return paginator.get_paginated_response(serializer.data)
+    else:
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['PATCH', ])

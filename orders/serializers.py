@@ -21,6 +21,7 @@ class AutoRepairShopSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     created_by = UserSerializer()
+    order_attachment = AttachmentSerializer(many=True)
 
     class Meta(object):
         model = Order
