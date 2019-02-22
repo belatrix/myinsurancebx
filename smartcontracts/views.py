@@ -181,5 +181,149 @@ class Verify(APIView):
             return Response({_('status'): _('failure'), _('messages'): _('operation_failed')}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class GetBlockNumber(APIView):
+    """
+    [POST]
+    Permite obtener el número de bloque a partir de un OTS.
+
+    Parámetros recibidos:
+    [Content-Type:application/json]
+    - ots: OTS recibido como prueba al momento de realizar el stamp
+
+    Devuelve número de bloque
+
+    Ejemplo:
+    {
+      "ots": "NzNkYzA5OGJkODlmZjdlMjc4OGFjMzJlNmU2ODdiOTdmODdiMTBjMWIyNzg5OTFlMDNkN2E2YWVkMDk3ODJkZTAxLTB4NGM2ZmNiNDBhMmUyZGVjYzc2YWQzMjM3MDU2NzZjMjljYWE1MmIyYjZkMDdiMDIzYjBhY2EzOWYzZGIxYmRlZg=="
+    }
+    """
+
+    schema = ManualSchema(fields=[
+        coreapi.Field(
+            name='ots',
+            required=True,
+            location='form',
+            schema=coreschema.String(),
+            description='El OTS recibido al hacer el stamp del archivo encodeado en sha256',
+        )
+    ])
+
+    def post(self, request):
+
+        try:
+
+            if not request.data.get('ots'):
+                raise ValidationError('ots')
+
+            ots = base64.b64decode(base64_ots).decode('utf-8')
+
+            ots_version = ots[:2]
+
+            if ots_version == PERMANENT_OTS_PREFIX:
+
+                ots_version, file_hash, ots_hash, tx_hash, block_number = ots.split('-')
+
+                transaction = ContractManager.get_transaction(tx_hash)
+
+                method_name, args = Utils.decode_contract_call(CONTRACTS['01']['abi'], transaction.input)
+
+                tx_ots_hash = args[0].decode('utf-8')
+
+                if tx_ots_hash == ots_hash:
+
+                    block = ContractManager.get_block(int(block_number))
+
+                    permanent_ots = PERMANENT_OTS_PREFIX + '-' + file_hash + '-' + ots_hash + '-' + tx_hash + '-' + str(block_number)
+
+                    return Response({_('status'): _('success'),
+                                     _('permanent_ots'): base64.b64encode(permanent_ots.encode('utf-8')).decode('utf-8'),
+                                     _('messages'): _('block_number: ') % (
+                                     str(block.number))},
+                                    status=status.HTTP_200_OK)
+                else:
+                    return Response({_('status'): _('failure'), _('messages'): _('ots_not_found')},
+                                    status=status.HTTP_404_NOT_FOUND)
+
+            else:
+                return Response({_('status'): _('failure'), _('messages'): _('Please enter a permante OTS')},status=status.HTTP_404_NOT_FOUND)
+
+        except ValidationError as e:
+            return Response({_('status'): _('failure'), _('messages'): _('parameter_missing') % e.message}, status=status.HTTP_400_BAD_REQUEST)
+        except CannotHandleRequest:
+            return Response({_('status'): _('failure'), _('messages'): _('could_not_connect')}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except Exception as e:
+            client.captureException()
+            return Response({_('status'): _('failure'), _('messages'): _('operation_failed')}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class GetHash(APIView):
+    """
+    [POST]
+    Permite obtener el file_hash a partir del OTS correspondiente.
+
+    Parámetros recibidos:
+    [Content-Type:application/json]
+    - ots: OTS recibido como prueba al momento de realizar el stamp
+
+    Devuelve número de bloque
+
+    Ejemplo:
+    {
+      "ots": "NzNkYzA5OGJkODlmZjdlMjc4OGFjMzJlNmU2ODdiOTdmODdiMTBjMWIyNzg5OTFlMDNkN2E2YWVkMDk3ODJkZTAxLTB4NGM2ZmNiNDBhMmUyZGVjYzc2YWQzMjM3MDU2NzZjMjljYWE1MmIyYjZkMDdiMDIzYjBhY2EzOWYzZGIxYmRlZg=="
+    }
+    """
+
+    schema = ManualSchema(fields=[
+        coreapi.Field(
+            name='ots',
+            required=True,
+            location='form',
+            schema=coreschema.String(),
+            description='El OTS recibido al hacer el stamp del archivo encodeado en sha256',
+        )
+    ])
+
+    def post(self, request):
+
+        try:
+
+            if not request.data.get('ots'):
+                raise ValidationError('ots')
+
+            ots = base64.b64decode(base64_ots).decode('utf-8')
+
+            ots_version = ots[:2]
+
+            if ots_version == PERMANENT_OTS_PREFIX:
+
+                ots_version, file_hash, ots_hash, tx_hash, block_number = ots.split('-')
+
+                transaction = ContractManager.get_transaction(tx_hash)
+
+                method_name, args = Utils.decode_contract_call(CONTRACTS['01']['abi'], transaction.input)
+
+                tx_ots_hash = args[0].decode('utf-8')
+
+                if tx_ots_hash == ots_hash:
+
+                    permanent_ots = PERMANENT_OTS_PREFIX + '-' + file_hash + '-' + ots_hash + '-' + tx_hash + '-' + str(block_number)
+
+                    return Response({_('status'): _('success'),
+                                     _('permanent_ots'): base64.b64encode(permanent_ots.encode('utf-8')).decode('utf-8'),
+                                     _('messages'): _('file_hash: ') % (
+                                     str(file_hash))},
+                                    status=status.HTTP_200_OK)
+                else:
+                    return Response({_('status'): _('failure'), _('messages'): _('ots_not_found')},
+                                    status=status.HTTP_404_NOT_FOUND)
+
+            else:
+                return Response({_('status'): _('failure'), _('messages'): _('Please enter a permante OTS')},status=status.HTTP_404_NOT_FOUND)
+
+        except ValidationError as e:
+            return Response({_('status'): _('failure'), _('messages'): _('parameter_missing') % e.message}, status=status.HTTP_400_BAD_REQUEST)
+        except CannotHandleRequest:
+            return Response({_('status'): _('failure'), _('messages'): _('could_not_connect')}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except Exception as e:
+            client.captureException()
+            return Response({_('status'): _('failure'), _('messages'): _('operation_failed')}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
