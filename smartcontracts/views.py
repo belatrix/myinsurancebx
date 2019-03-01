@@ -9,6 +9,7 @@ from raven.contrib.django.raven_compat.models import client
 from rest_framework.schemas import ManualSchema
 import coreschema
 import coreapi
+import pdb
 
 from .manager import ContractManager
 from .utils import Utils
@@ -47,15 +48,16 @@ class Stamp(APIView):
     def post(self, request):
 
         try:
+            
             if not request.data.get('file_hash'):
                 raise ValidationError('file_hash')
 
             file_hash = request.data.get('file_hash')
-
+            
             ots_hash = Utils.get_ots_hash(file_hash)
-
+            
             tx_hash = ContractManager.stamp(ots_hash, file_hash)
-
+            
             # Al OTS se le agrega la transacción para poder verificar luego si está pendiente de subida
             ots = TEMPORARY_OTS_PREFIX + '-' + ots_hash + '-' + tx_hash.hex()
 
