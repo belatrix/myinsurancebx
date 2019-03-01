@@ -1,4 +1,4 @@
-from .local_settings import CONTRACTS, CONTRACT_VERSION, ACCOUNT_ADDRESS, HOST_ADDRESS
+from .ganache_settings import CONTRACTS, CONTRACT_VERSION, ACCOUNT_ADDRESS, HOST_ADDRESS
 
 from django.db import models
 from web3 import Web3, HTTPProvider
