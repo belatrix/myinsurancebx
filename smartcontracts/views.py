@@ -1,7 +1,7 @@
 import base64
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from web3.exceptions import CannotHandleRequest
@@ -31,7 +31,7 @@ class Stamp(APIView):
       "file_hash": "1957db7fe23e4be1740ddeb941ddda7ae0a6b782e536a9e00b5aa82db1e84547"
     }
     """
-
+    permission_classes = (permissions.IsAuthenticated, )
     schema = ManualSchema(fields=[
         coreapi.Field(
             name='file_hash',
@@ -88,7 +88,7 @@ class Verify(APIView):
       "ots": "NzNkYzA5OGJkODlmZjdlMjc4OGFjMzJlNmU2ODdiOTdmODdiMTBjMWIyNzg5OTFlMDNkN2E2YWVkMDk3ODJkZTAxLTB4NGM2ZmNiNDBhMmUyZGVjYzc2YWQzMjM3MDU2NzZjMjljYWE1MmIyYjZkMDdiMDIzYjBhY2EzOWYzZGIxYmRlZg=="
     }
     """
-
+    permission_classes = (permissions.IsAuthenticated,)
     schema = ManualSchema(fields=[
         coreapi.Field(
             name='file_hash',
@@ -197,7 +197,7 @@ class GetBlockNumber(APIView):
       "ots": "NzNkYzA5OGJkODlmZjdlMjc4OGFjMzJlNmU2ODdiOTdmODdiMTBjMWIyNzg5OTFlMDNkN2E2YWVkMDk3ODJkZTAxLTB4NGM2ZmNiNDBhMmUyZGVjYzc2YWQzMjM3MDU2NzZjMjljYWE1MmIyYjZkMDdiMDIzYjBhY2EzOWYzZGIxYmRlZg=="
     }
     """
-
+    permission_classes = (permissions.IsAuthenticated,)
     schema = ManualSchema(fields=[
         coreapi.Field(
             name='ots',
@@ -272,7 +272,7 @@ class GetHash(APIView):
       "ots": "NzNkYzA5OGJkODlmZjdlMjc4OGFjMzJlNmU2ODdiOTdmODdiMTBjMWIyNzg5OTFlMDNkN2E2YWVkMDk3ODJkZTAxLTB4NGM2ZmNiNDBhMmUyZGVjYzc2YWQzMjM3MDU2NzZjMjljYWE1MmIyYjZkMDdiMDIzYjBhY2EzOWYzZGIxYmRlZg=="
     }
     """
-
+    permission_classes = (permissions.IsAuthenticated,)
     schema = ManualSchema(fields=[
         coreapi.Field(
             name='ots',
