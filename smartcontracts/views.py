@@ -12,7 +12,7 @@ import coreapi
 
 from .manager import ContractManager
 from .utils import Utils
-from .local_settings import TEMPORARY_OTS_PREFIX, PERMANENT_OTS_PREFIX, CONTRACTS
+from .ganache_settings import TEMPORARY_OTS_PREFIX, PERMANENT_OTS_PREFIX, CONTRACTS
 
 
 class Stamp(APIView):

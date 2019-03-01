@@ -1,7 +1,7 @@
 import datetime
 import hashlib
 import time
-from .local_settings import ACCOUNT_ADDRESS, CONTRACT_VERSION
+from .ganache_settings import ACCOUNT_ADDRESS, CONTRACT_VERSION
 from ethereum.abi import (decode_abi, normalize_name as normalize_abi_method_name, method_id as get_abi_method_id)
 from ethereum.utils import encode_int, zpad, decode_hex
 
