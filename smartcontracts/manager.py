@@ -37,7 +37,7 @@ class ContractManager(models.Manager):
 
     @staticmethod
     def get_block(block_number):
-
+        print("buscando el bloque ", block_number)
         web3 = ContractManager.get_provider()
         return web3.eth.getBlock(block_number)
 

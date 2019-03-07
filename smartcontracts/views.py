@@ -9,7 +9,6 @@ from raven.contrib.django.raven_compat.models import client
 from rest_framework.schemas import ManualSchema
 import coreschema
 import coreapi
-import pdb
 
 from .manager import ContractManager
 from .utils import Utils
@@ -53,18 +52,18 @@ class Stamp(APIView):
                 raise ValidationError('file_hash')
 
             file_hash = request.data.get('file_hash')
-            
+            print("file_hash recibido es ", file_hash)
             ots_hash = Utils.get_ots_hash(file_hash)
-            
+            print("ots_hash es ", file_hash)
             tx_hash = ContractManager.stamp(ots_hash, file_hash)
-            
+            print("tx_hash es ", tx_hash)
             # Al OTS se le agrega la transacción para poder verificar luego si está pendiente de subida
             ots = TEMPORARY_OTS_PREFIX + '-' + ots_hash + '-' + tx_hash.hex()
-
+            print("ots es ", ots)
             return Response({_('status'): _('success'), _('temporary_ots'): base64.b64encode(ots.encode('utf-8')).decode('utf-8')}, status=status.HTTP_200_OK)
 
         except ValidationError as e:
-            return Response({_('status'): _('failure'), _('messages'): _('parameter_missing') % e.message}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({_('status'): _('failure'), _('messages'): ('parameter_missing', e.message)}, status=status.HTTP_400_BAD_REQUEST)
         except CannotHandleRequest:
             return Response({_('status'): _('failure'), _('messages'): _('could_not_connect')}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except Exception as e:
@@ -118,13 +117,13 @@ class Verify(APIView):
 
             file_hash = request.data.get('file_hash')
             base64_ots = request.data.get('ots')
-
+            print("file hash a verificar es ", file_hash)
             ots = base64.b64decode(base64_ots).decode('utf-8')
-
+            print("ots es ", ots)
             ots_version = ots[:2]
-
+            print("ots version es ", ots_version)
             if ots_version == PERMANENT_OTS_PREFIX:
-
+                print("el ots recibido era permanente ", ots_version)
                 ots_version, file_hash, ots_hash, tx_hash, block_number = ots.split('-')
 
                 transaction = ContractManager.get_transaction(tx_hash)
@@ -142,28 +141,34 @@ class Verify(APIView):
 
                     return Response({_('status'): _('success'),
                                      _('permanent_ots'): base64.b64encode(permanent_ots.encode('utf-8')).decode('utf-8'),
-                                     _('messages'): _('file_uploaded') % (
-                                     file_hash, str(block.number), str(Utils.datetime_from_timestamp(block.timestamp)))},
+                                     _('messages'): ('file_stamped', file_hash, str(block.number), str(Utils.datetime_from_timestamp(block.timestamp)))},
                                     status=status.HTTP_200_OK)
                 else:
                     return Response({_('status'): _('failure'), _('messages'): _('file_not_found')},
                                     status=status.HTTP_404_NOT_FOUND)
 
             else:
-
+                print("el ots recibido era temporal ", ots_version)
                 ots_version, ots_hash, tx_hash = ots.split('-')
 
                 contract_version = ots_hash[-2:]
-
+                print("la version del contrato es ", contract_version)
                 verified = ContractManager.verify(contract_version, ots_hash, file_hash)
-
+                print("verificado: ", verified)
                 if verified:
                     block_number = ContractManager.get_block_number(contract_version, ots_hash)
                     block = ContractManager.get_block(block_number)
-
+                    print("bloque obtenido ", block)
                     permanent_ots = PERMANENT_OTS_PREFIX + '-' + file_hash + '-' + ots_hash + '-' + tx_hash + '-' + str(block_number)
-
-                    return Response({_('status'): _('success'), _('permanent_ots'): base64.b64encode(permanent_ots.encode('utf-8')).decode('utf-8') ,_('messages'): _('file_uploaded') % (file_hash, str(block.number), str(Utils.datetime_from_timestamp(block.timestamp)))},status=status.HTTP_200_OK)
+                    print("el ots permanente es ", permanent_ots)
+                    print("file hash ", file_hash)
+                    print("permanent ots encoded ", base64.b64encode(permanent_ots.encode('utf-8')).decode('utf-8'))
+                    print("nro bloque ", str(block.number))
+                    print("datetime ", Utils.datetime_from_timestamp(block.timestamp))
+                    return Response({_('status'): _('success'),
+                                    _('permanent_ots'): base64.b64encode(permanent_ots.encode('utf-8')).decode('utf-8'),
+                                    _('messages'): ('file_stamped', file_hash, str(block.number), str(Utils.datetime_from_timestamp(block.timestamp)))}, 
+                                    status=status.HTTP_200_OK)
                 else:
                     try:
                         transaction = ContractManager.get_transaction(tx_hash)
@@ -172,10 +177,10 @@ class Verify(APIView):
                     except ValueError:
                         pass
 
-                    return Response({_('status'): _('failure'), _('messages'): _('file_not_found')},status=status.HTTP_404_NOT_FOUND)
+                    return Response({_('status'): _('failure'), _('messages'): _('file_not_found')}, status=status.HTTP_404_NOT_FOUND)
 
         except ValidationError as e:
-            return Response({_('status'): _('failure'), _('messages'): _('parameter_missing') % e.message}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({_('status'): _('failure'), _('messages'): ('parameter_missing', e.message)}, status=status.HTTP_400_BAD_REQUEST)
         except CannotHandleRequest:
             return Response({_('status'): _('failure'), _('messages'): _('could_not_connect')}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except Exception as e:
@@ -217,6 +222,7 @@ class GetBlockNumber(APIView):
             if not request.data.get('ots'):
                 raise ValidationError('ots')
 
+            base64_ots = request.data.get('ots')
             ots = base64.b64decode(base64_ots).decode('utf-8')
 
             ots_version = ots[:2]
@@ -239,8 +245,7 @@ class GetBlockNumber(APIView):
 
                     return Response({_('status'): _('success'),
                                      _('permanent_ots'): base64.b64encode(permanent_ots.encode('utf-8')).decode('utf-8'),
-                                     _('messages'): _('block_number: ') % (
-                                     str(block.number))},
+                                     _('messages'): ('block_number: ', str(block.number))},
                                     status=status.HTTP_200_OK)
                 else:
                     return Response({_('status'): _('failure'), _('messages'): _('ots_not_found')},
@@ -250,7 +255,7 @@ class GetBlockNumber(APIView):
                 return Response({_('status'): _('failure'), _('messages'): _('Please enter a permante OTS')},status=status.HTTP_404_NOT_FOUND)
 
         except ValidationError as e:
-            return Response({_('status'): _('failure'), _('messages'): _('parameter_missing') % e.message}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({_('status'): _('failure'), _('messages'): ('parameter_missing', e.message)}, status=status.HTTP_400_BAD_REQUEST)
         except CannotHandleRequest:
             return Response({_('status'): _('failure'), _('messages'): _('could_not_connect')}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except Exception as e:
@@ -292,6 +297,7 @@ class GetHash(APIView):
             if not request.data.get('ots'):
                 raise ValidationError('ots')
 
+            base64_ots = request.data.get('ots')
             ots = base64.b64decode(base64_ots).decode('utf-8')
 
             ots_version = ots[:2]
@@ -312,8 +318,7 @@ class GetHash(APIView):
 
                     return Response({_('status'): _('success'),
                                      _('permanent_ots'): base64.b64encode(permanent_ots.encode('utf-8')).decode('utf-8'),
-                                     _('messages'): _('file_hash: ') % (
-                                     str(file_hash))},
+                                     _('messages'): ('file_hash: ', str(file_hash))},
                                     status=status.HTTP_200_OK)
                 else:
                     return Response({_('status'): _('failure'), _('messages'): _('ots_not_found')},
@@ -323,7 +328,7 @@ class GetHash(APIView):
                 return Response({_('status'): _('failure'), _('messages'): _('Please enter a permante OTS')},status=status.HTTP_404_NOT_FOUND)
 
         except ValidationError as e:
-            return Response({_('status'): _('failure'), _('messages'): _('parameter_missing') % e.message}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({_('status'): _('failure'), _('messages'): ('parameter_missing', e.message)}, status=status.HTTP_400_BAD_REQUEST)
         except CannotHandleRequest:
             return Response({_('status'): _('failure'), _('messages'): _('could_not_connect')}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except Exception as e:
