@@ -56,11 +56,11 @@ class Stamp(APIView):
             ots_hash = Utils.get_ots_hash(file_hash)
             print("ots_hash es ", file_hash)
             tx_hash = ContractManager.stamp(ots_hash, file_hash)
-            print("tx_hash es ", tx_hash)
+            print("tx_hash es ", str(tx_hash.hex()))
             # Al OTS se le agrega la transacción para poder verificar luego si está pendiente de subida
             ots = TEMPORARY_OTS_PREFIX + '-' + ots_hash + '-' + tx_hash.hex()
             print("ots es ", ots)
-            return Response({_('status'): _('success'), _('temporary_ots'): base64.b64encode(ots.encode('utf-8')).decode('utf-8')}, status=status.HTTP_200_OK)
+            return Response({_('status'): _('success'), _('temporary_ots'): base64.b64encode(ots.encode('utf-8')).decode('utf-8'), _('transaction_hash'): str(tx_hash.hex())}, status=status.HTTP_200_OK)
 
         except ValidationError as e:
             return Response({_('status'): _('failure'), _('messages'): ('parameter_missing', e.message)}, status=status.HTTP_400_BAD_REQUEST)
