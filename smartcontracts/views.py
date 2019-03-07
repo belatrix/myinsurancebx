@@ -148,7 +148,7 @@ class Verify(APIView):
                                     status=status.HTTP_404_NOT_FOUND)
 
             else:
-                print("el ots recibido era temporal ", ots_version)
+                print("el ots recibido era temporal ")
                 ots_version, ots_hash, tx_hash = ots.split('-')
 
                 contract_version = ots_hash[-2:]
@@ -158,7 +158,7 @@ class Verify(APIView):
                 if verified:
                     block_number = ContractManager.get_block_number(contract_version, ots_hash)
                     block = ContractManager.get_block(block_number)
-                    print("bloque obtenido ", block)
+                    print("block data es ", block)
                     permanent_ots = PERMANENT_OTS_PREFIX + '-' + file_hash + '-' + ots_hash + '-' + tx_hash + '-' + str(block_number)
                     print("el ots permanente es ", permanent_ots)
                     print("file hash ", file_hash)

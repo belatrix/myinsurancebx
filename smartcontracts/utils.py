@@ -13,7 +13,7 @@ class Utils():
 
     @staticmethod
     def datetime_from_timestamp(timestamp):
-        print("obteniendo datetime ")
+        
         return datetime.datetime.fromtimestamp(timestamp).strftime('%d/%m/%Y %H:%M:%S')
 
     @staticmethod
