@@ -115,9 +115,9 @@ class Verify(APIView):
             if not request.data.get('ots'):
                 raise ValidationError('ots')
 
-            file_hash = request.data.get('file_hash')
+            req_file_hash = request.data.get('file_hash')
             base64_ots = request.data.get('ots')
-            print("file hash a verificar es ", file_hash)
+            print("file hash a verificar es ", req_file_hash)
             ots = base64.b64decode(base64_ots).decode('utf-8')
             print("ots es ", ots)
             ots_version = ots[:2]
@@ -133,7 +133,12 @@ class Verify(APIView):
                 tx_ots_hash = args[0].decode('utf-8')
                 tx_file_hash = args[1].decode('utf-8')
 
-                if tx_ots_hash == ots_hash and tx_file_hash == file_hash:
+                print("el ots del blockchain es ", tx_ots_hash)
+                print("el file_hash del ots es ", file_hash)
+                print("el file_hash del blockchain es ", tx_file_hash)
+                print("el file_hash del front es ", req_file_hash)
+
+                if tx_ots_hash == ots_hash and tx_file_hash == req_file_hash:
 
                     block = ContractManager.get_block(int(block_number))
 
