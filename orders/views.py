@@ -86,6 +86,7 @@ def order_creation(request):
     if serializer.is_valid(raise_exception=True):
         user = request.user
         initial_status = OrderStatus.objects.filter(is_default=True).first()
+        print("initial status ", initial_status)
         try:
             order = Order.objects.create(
                 car_model=serializer.validated_data['car_model'],

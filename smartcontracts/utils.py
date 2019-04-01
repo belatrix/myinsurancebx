@@ -1,12 +1,15 @@
 import datetime
 import hashlib
 import time
-from .ganache_settings import ACCOUNT_ADDRESS, CONTRACT_VERSION
+
+# from .ganache_settings import ACCOUNT_ADDRESS, CONTRACT_VERSION
+from .rinkeby_settings import ACCOUNT_ADDRESS, CONTRACT_VERSION
+
 from ethereum.abi import (decode_abi, normalize_name as normalize_abi_method_name, method_id as get_abi_method_id)
 from ethereum.utils import encode_int, zpad, decode_hex
 
-
 class Utils():
+
     @staticmethod
     def sha256_encode(string):
         return hashlib.sha256(string.encode('utf-8')).hexdigest()

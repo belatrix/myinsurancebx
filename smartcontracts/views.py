@@ -12,8 +12,8 @@ import coreapi
 
 from .manager import ContractManager
 from .utils import Utils
-from .ganache_settings import TEMPORARY_OTS_PREFIX, PERMANENT_OTS_PREFIX, CONTRACTS
-
+# from .ganache_settings import TEMPORARY_OTS_PREFIX, PERMANENT_OTS_PREFIX, CONTRACTS
+from .rinkeby_settings import TEMPORARY_OTS_PREFIX, PERMANENT_OTS_PREFIX, CONTRACTS
 
 class Stamp(APIView):
     """
@@ -154,10 +154,13 @@ class Verify(APIView):
 
             else:
                 print("el ots recibido era temporal ")
+                print("ots es ", ots)
                 ots_version, ots_hash, tx_hash = ots.split('-')
-
+                file_hash = req_file_hash
                 contract_version = ots_hash[-2:]
                 print("la version del contrato es ", contract_version)
+                print("my ots ", ots_hash)
+                print("my file ", file_hash)
                 verified = ContractManager.verify(contract_version, ots_hash, file_hash)
                 print("verificado: ", verified)
                 if verified:

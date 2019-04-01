@@ -27,5 +27,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # noqa: F405
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'myinsurancebx',
+        # 'USER': env('DATABASE_USER', ''),
+        # 'PASSWORD': env('DATABASE_PASSWORD', ''),
+        # 'HOST': 'localhost',
+        # 'PORT': '',
     }
 }
