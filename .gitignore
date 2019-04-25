@@ -113,3 +113,10 @@ venv.bak/
 
 # Pyethereum
 pyethereum/
+
+# Backups
+*.dump
+
+# environment
+.idea
+*.iml
