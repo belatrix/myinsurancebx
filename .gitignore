@@ -116,3 +116,7 @@ pyethereum/
 
 # Backups
 *.dump
+
+# environment
+.idea
+*.iml
