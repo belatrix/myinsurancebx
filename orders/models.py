@@ -77,3 +77,13 @@ class Attachment(models.Model):
 
     def __str__(self):
         return self.file.name
+
+
+class FileHash(models.Model):
+    file_hash = models.CharField(max_length=64, null=False, blank=False)
+    file_name = models.CharField(max_length=255, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.id)

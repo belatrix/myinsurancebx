@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Order, OrderStatus, Attachment, AutoRepairShop
+from .models import Order, OrderStatus, Attachment, AutoRepairShop, FileHash
 from users.serializers import UserSerializer
 
 
@@ -43,4 +43,9 @@ class OrderCreationSerializer(serializers.Serializer):
 class OrderStatusSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = OrderStatus
+        fields = '__all__'
+
+class FileHashSerializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = FileHash
         fields = '__all__'

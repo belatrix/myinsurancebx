@@ -5,8 +5,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import NotAcceptable
 from rest_framework.response import Response
 
-from .models import Order, OrderStatus, Attachment, AutoRepairShop
-from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSerializer, OrderStatusSerializer
+from .models import Order, OrderStatus, Attachment, AutoRepairShop, FileHash
+from .serializers import AttachmentSerializer, OrderSerializer, OrderCreationSerializer, OrderStatusSerializer, \
+    FileHashSerializer
 from .serializers import AutoRepairShopSerializer, OrderBudgetSerializer
 from users.models import User
 from users.permissions import IsInspectorOrStaff, IsInsuranceOrStaff, IsAutoRepairShopOrStaff, IsStaff
@@ -224,3 +225,30 @@ def upload_file(request, order_id):
     attachment = get_object_or_404(Attachment, pk=pre_attachment.id)
     serializer = AttachmentSerializer(attachment)
     return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
+@api_view(['POST', ])
+@permission_classes((permissions.IsAuthenticated,))
+def associate_hash(request,):
+    """
+    Associates a hash to a filename
+    :param request:
+    :return:
+    """
+    record = FileHash()
+    record.file_hash = request.data.get('hash')
+    record.file_name = request.data.get('filename')
+
+    try:
+        record.save()
+        print("record saved")
+        serializer = FileHashSerializer(record)
+        return Response({('status'): ('success'),
+                         ('data'): serializer.data},
+                        status=status.HTTP_200_OK)
+    except:
+        print("error while saving")
+        serializer = FileHashSerializer(record)
+        return Response({('status'): ('error'),
+                         ('data'): serializer.data},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import order_bulk_deletion, order_priority_change, auto_repair_shop_assign
+from .views import order_bulk_deletion, order_priority_change, auto_repair_shop_assign, associate_hash
 from .views import order_creation, order_detail, order_list, order_update, upload_file, order_status_list
 from .views import order_status_change, auto_repair_shop_list, order_budget_update
 
@@ -18,4 +18,5 @@ urlpatterns = [
     path('list/', order_list, name='order_list'),
     path('status/list/', order_status_list, name='order_status_list'),
     path('repairshop/list/', auto_repair_shop_list, name='auto_repair_shop_list'),
+    path('file/hash', associate_hash, name='file_hash_associate')
 ]
