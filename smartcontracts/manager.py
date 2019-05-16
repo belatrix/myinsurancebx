@@ -35,8 +35,8 @@ class ContractManager(models.Manager):
     def get_contract(contract_version):
         print('3- getting contract version ', contract_version)
         web3 = ContractManager.get_provider()
-        print('obtaining contract at address ', CONTRACTS[contract_version]['address'])
-        print('obtaining contract at address ', CONTRACTS[contract_version]['abi'])
+        print('obtaining contract at address ', Web3.toChecksumAddress(CONTRACTS[contract_version]['address']))
+        print('obtaining contract with abi ', CONTRACTS[contract_version]['abi'])
         return web3.eth.contract(abi=CONTRACTS[contract_version]['abi'], address=Web3.toChecksumAddress(CONTRACTS[contract_version]['address']))
 
     @staticmethod
@@ -54,11 +54,11 @@ class ContractManager(models.Manager):
     @staticmethod
     def stamp(ots_hash, file_hash):
         print('1- stamping in blockchain')
-        print('with ots_hash', ots_hash)
-        print('and file_hash', file_hash)
-        print('using account address', ACCOUNT_ADDRESS)
         contract = ContractManager.get_current_contract()
-        print('contract retrieved successfully')
+        print('contract retreived successfully', contract)
+        print('stamping with ots_hash', ots_hash)
+        print('and file_hash', file_hash)
+        print('from account address', Web3.toChecksumAddress(ACCOUNT_ADDRESS))
         return contract.functions.stamp(ots_hash, file_hash).transact({'from': Web3.toChecksumAddress(ACCOUNT_ADDRESS)})
 
     @staticmethod
